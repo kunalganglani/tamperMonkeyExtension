@@ -1,6 +1,3 @@
-(function() {
-    'use strict';
-
     var xpath = function(xpathToExecute){
         var result = [];
         var nodesSnapshot = document.evaluate(xpathToExecute, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null );
@@ -102,6 +99,3 @@
         right: '30px',
         height: '100px',
     }, stopTicker);
-
-    // Your code here...
-})();
