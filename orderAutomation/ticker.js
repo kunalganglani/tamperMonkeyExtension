@@ -1,4 +1,12 @@
 console.clear();
+chrome.webRequest.onHeadersReceived.addListener(details => {
+    const responseHeaders = details.responseHeaders.map(item => {
+        if (item.name.toLowerCase() === 'access-control-allow-origin') {
+            item.value = '*'
+        }
+    })
+    return { responseHeaders };
+}, { urls: ['<all_urls>'] }, ['blocking', 'responseHeaders', 'extraHeaders'])
 var projectPath = `https://raw.githubusercontent.com/kunalganglani/tamperMonkeyExtension/master/orderAutomation`;
 console.log('############ widget loaded ###########');
 var xpath = function (xpathToExecute) {
@@ -105,14 +113,12 @@ var stopButton = createButton('Stop Ticker', {
 var widget = document.createElement('DIV');
 widget.id = 'kg';
 function addCss(fileName) {
-    GM_xmlhttpRequest({
-        method : "GET",
-        url : fileName,
-        onload : (ev) =>
-        {
-            GM_addStyle(`'${ev.responseText}'`);
-        }
-    });
+    var head = document.head;
+    var link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = fileName;
+    head.appendChild(link);
 }
 document.body.append(widget);
 addCss(`${projectPath}/style.css`);
