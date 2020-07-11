@@ -1,4 +1,5 @@
-console.log('widget loaded');
+console.clear();
+console.log('############ widget loaded ###########');
 var xpath = function (xpathToExecute) {
     var result = [];
     var nodesSnapshot = document.evaluate(xpathToExecute, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
