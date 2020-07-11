@@ -112,6 +112,6 @@ function addCss(fileName) {
     head.appendChild(link);
 }
 document.body.append(widget);
-addCss();
+addCss('https://github.com/kunalganglani/tamperMonkeyExtension/blob/913a90cbe3e8362b4d09ee1cacd3d7f2358ebb88/orderAutomation/style.css');
 document.getElementById('kg').append(startButton);
 document.getElementById('kg').append(startButton);
