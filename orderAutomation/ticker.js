@@ -89,5 +89,5 @@ var stopButton = createButton('Stop', 'stopButton', stopTicker);
 var widget = document.createElement('DIV');
 widget.id = 'kg';
 document.body.append(widget);
-document.getElementById('kg').append(stopButton);
 document.getElementById('kg').append(startButton);
+document.getElementById('kg').append(stopButton);
