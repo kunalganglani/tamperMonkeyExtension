@@ -121,10 +121,10 @@ alt="typing email GIF">
 </div>`)
 
 function startLoader() {
-    document.getElementById('loader').display = 'inline-block';
+    document.getElementById('loader').style.display= 'inline-block'
 }
 function stopLoader() {
-    document.getElementById('loader').display = 'none';
+    document.getElementById('loader').style.display= 'none'
 }
 widget.append(startButton);
 widget.append(stopButton);
