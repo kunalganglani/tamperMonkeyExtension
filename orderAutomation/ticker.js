@@ -106,4 +106,4 @@ var widget = document.createElement('DIV');
 widget.id = 'kg';
 document.body.append(widget);
 document.getElementById('kg').append(startButton);
-document.getElementById('kg').append(startButton);
+document.getElementById('kg').append(stopButton);
