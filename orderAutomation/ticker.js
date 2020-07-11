@@ -52,7 +52,8 @@ var tickerAction = function () {
 };
 var readerAction = function () {
     var username = xpath(`//span[contains(text(), 'Hello,')]`)[0].textContent.split(', ')[1];
-    findElementTextAndPlayOnce('to Card', username);
+    var listenTo = document.getElementById('inputHolderForNotification').value;
+    findElementTextAndPlayOnce(listenTo, username);
 }
 
 var startTicker = function () {
@@ -86,8 +87,13 @@ function createButton(label, id, clickhandler) {
 }
 var startButton = createButton('Start', 'startButton', startTicker);
 var stopButton = createButton('Stop', 'stopButton', stopTicker);
+var inputHolderForNotification = document.createElement('INPUT');
+inputHolderForNotification.id = 'inputHolderForNotification';
+inputHolderForNotification.placeholder = 'Enter text to notifify on';
+inputHolderForNotification.value = 'to cart';
 var widget = document.createElement('DIV');
 widget.id = 'kg';
 document.body.append(widget);
-document.getElementById('kg').append(startButton);
-document.getElementById('kg').append(stopButton);
+widget.append(startButton);
+widget.append(stopButton);
+widget.append(inputHolderForNotification);
