@@ -104,15 +104,15 @@ var stopButton = createButton('Stop Ticker', {
 }, stopTicker);
 var widget = document.createElement('DIV');
 widget.id = 'kg';
-function addCss(fileName) {
-    var head = document.head;
-    var link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href = fileName;
-    head.appendChild(link);
-}
 document.body.append(widget);
-addCss(`${projectPath}/style.css`);
+widget.style = {
+    position: absolute,
+    width: '80%',
+    height: '100px',
+    background: 'green',
+    bottom: '10px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+}
 document.getElementById('kg').append(startButton);
 document.getElementById('kg').append(startButton);
