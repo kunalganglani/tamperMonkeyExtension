@@ -81,8 +81,6 @@ function createButton(label, id, clickhandler) {
     var btn = document.createElement("BUTTON");
     btn.id = id;
     btn.innerHTML = label;
-    btn.style.height = style.height;
-    btn.style.background = style.background;
     btn.addEventListener('click', clickhandler)
     return btn;
 }
