@@ -77,33 +77,19 @@ var stopTicker = function () {
         clearInterval(ticker);
     }
 }
-
-function createButton(label, style, clickhandler) {
+function createButton(label, id, clickhandler) {
     var btn = document.createElement("BUTTON");
+    btn.id = id;
     btn.innerHTML = label;
     btn.style.height = style.height;
     btn.style.background = style.background;
     btn.addEventListener('click', clickhandler)
     return btn;
 }
-
-var startButton = createButton('Start Ticker', {
-    position: 'absolute',
-    top: '50px',
-    right: '80px',
-    background: 'greeen',
-    height: '100px',
-}, startTicker);
-
-var stopButton = createButton('Stop Ticker', {
-    position: 'absolute',
-    top: '50px',
-    background: 'greeen',
-    right: '30px',
-    height: '100px',
-}, stopTicker);
+var startButton = createButton('Start', 'startButton', startTicker);
+var stopButton = createButton('Stop', 'stopButton', stopTicker);
 var widget = document.createElement('DIV');
 widget.id = 'kg';
 document.body.append(widget);
-document.getElementById('kg').append(startButton);
 document.getElementById('kg').append(stopButton);
+document.getElementById('kg').append(startButton);
