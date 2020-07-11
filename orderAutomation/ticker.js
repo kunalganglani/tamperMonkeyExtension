@@ -1,4 +1,5 @@
 console.clear();
+var projectPath = `https://raw.githubusercontent.com/kunalganglani/tamperMonkeyExtension/master/orderAutomation`;
 console.log('############ widget loaded ###########');
 var xpath = function (xpathToExecute) {
     var result = [];
@@ -112,6 +113,6 @@ function addCss(fileName) {
     head.appendChild(link);
 }
 document.body.append(widget);
-addCss('https://github.com/kunalganglani/tamperMonkeyExtension/blob/913a90cbe3e8362b4d09ee1cacd3d7f2358ebb88/orderAutomation/style.css');
+addCss(`${projectPath}/style.css`);
 document.getElementById('kg').append(startButton);
 document.getElementById('kg').append(startButton);
