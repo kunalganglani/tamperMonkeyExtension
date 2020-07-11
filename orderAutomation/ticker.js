@@ -59,6 +59,7 @@ var readerAction = function () {
 
 var startTicker = function () {
     console.log('ticker started');
+    startLoader();
     var everyMSeconds = 1;
     var id = setInterval(
         tickerAction,
@@ -75,6 +76,7 @@ var startTicker = function () {
 
 var stopTicker = function () {
     console.log('ticker stopped');
+    stopLoader();
     for (let ticker of tickerID) {
         clearInterval(ticker);
     }
