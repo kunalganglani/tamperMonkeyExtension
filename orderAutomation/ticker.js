@@ -10,7 +10,8 @@ var xpath = function (xpathToExecute) {
     return result;
 }
 function findElementTextAndPlayOnce(elementTextToFind, textToPlay) {
-    var elements = xpath(`//*[@id="widgetContent"]//*[contains(text(), '${elementTextToFind}')]`)
+    var widgetid = document.getElementById('containerIdInput').value;
+    var elements = xpath(`//*[@id="${widgetid}"]//*[contains(text(), '${elementTextToFind}')]`)
     for (let ele of elements) {
         if (ele.dataset.played == undefined || ele.dataset.played === 'false') {
             playSound(textToPlay);
@@ -27,10 +28,10 @@ function playSound(str) {
 
 var tickerID = [];
 var tickerAction = function () {
-
-    var givenPath = `//*[@id="widgetContent"]//button`;
-    var givenPath2 = `//*[@id="widgetContent"]//*[contains(text(), 'Add')]`;
-    var givenPath3 = `//*[@id="widgetContent"]//input`
+    var widgetid = document.getElementById('containerIdInput').value;
+    var givenPath = `//*[@id="${widgetid}"]//button`;
+    var givenPath2 = `//*[@id="${widgetid}"]//*[contains(text(), 'Add')]`;
+    var givenPath3 = `//*[@id="${widgetid}"]//input`
     var buttons;
     var givenPaths = [givenPath, givenPath2, givenPath3];
     for (let k = 0; k < givenPaths.length; k++) {
@@ -91,9 +92,24 @@ var inputHolderForNotification = document.createElement('INPUT');
 inputHolderForNotification.id = 'inputHolderForNotification';
 inputHolderForNotification.placeholder = 'Enter text to notifify on';
 inputHolderForNotification.value = 'to cart';
+
+var containerIdInput = document.createElement('INPUT');
+containerIdInput.id = 'containerIdInput';
+containerIdInput.placeholder = 'Enter container id for sale';
+containerIdInput.value = 'widgetContent';
+
 var widget = document.createElement('DIV');
+label1 = document.createElement('span')
+label1.innerText = 'Notify On';
+
+label2 = document.createElement('span')
+label2.innerText = 'Sale Container id';
 widget.id = 'kg';
-document.body.append(widget);
 widget.append(startButton);
 widget.append(stopButton);
+widget.append(label1)
 widget.append(inputHolderForNotification);
+widget.append(label2)
+widget.append(containerIdInput);
+
+document.body.append(widget);
