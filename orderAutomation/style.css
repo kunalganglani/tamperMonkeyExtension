@@ -1,36 +1,47 @@
 #kg {
-    position: sticky;
-    position: -webkit-sticky;
-    margin: auto;
-    padding: 5px;
-    width: 80%;
-    height: 90px;
-    background: #563d7c;
-    bottom: 15px;
-    z-index: 9999999;
-    border-radius: 10px;
+  position: sticky;
+  position: -webkit-sticky;
+  margin: auto;
+  padding: 5px;
+  width: 80%;
+  height: 90px;
+  background: #563d7c;
+  bottom: 15px;
+  z-index: 9999999;
+  border-radius: 10px;
+}
+#kg #loader {
+  display: none;
+}
+#loaderImage {
+  width: auto;
+  height: 90px;
+  position: absolute;
+  top: 0px;
+  opacity: 100%;
 }
 #kg input {
-    height: 70px;
-    margin: 0px 10px;
-    font-size: 24px;
-    padding: 7px;
+  height: 70px;
+  margin: 0px 10px;
+  font-size: 24px;
+  padding: 7px;
 }
 #kg button {
-    height: 70px;
-    border-radius: 8px;
-    display: inline-block;
-    height: 70px;
-    margin: 7px 8px;
+  height: 70px;
+  border-radius: 8px;
+  display: inline-block;
+  height: 70px;
+  margin: 7px 8px;
 }
-#kg button,span {
-    color: white;
-    font-weight: bolder;
-    font-size: 24px;
+#kg button,
+span {
+  color: white;
+  font-weight: bolder;
+  font-size: 24px;
 }
 #stopButton {
-    background: #dc3545;
+  background: #dc3545;
 }
 #startButton {
-    background:#28a745;
+  background: #28a745;
 }

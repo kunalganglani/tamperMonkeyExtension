@@ -105,11 +105,31 @@ label1.innerText = 'Notify On';
 label2 = document.createElement('span')
 label2.innerText = 'Sale Container id';
 widget.id = 'kg';
+function htmlToElem(html) {
+    let temp = document.createElement('template');
+    html = html.trim(); // Never return a space text node as a result
+    temp.innerHTML = html;
+    return temp.content.firstChild;
+  }
+
+var loader = htmlToElem(`<div id="loader">
+<img id="loaderImage" 
+src="https://media0.giphy.com/media/9CffOPMLx0Hf2/giphy.gif?cid=ecf05e47fcdff774bdb38787e7846e18912561f1d82808c5&amp;rid=giphy.gif"
+alt="typing email GIF">
+</div>`)
+
+function startLoader() {
+    document.getElementById('loader').display = 'inline-block';
+}
+function stopLoader() {
+    document.getElementById('loader').display = 'none';
+}
 widget.append(startButton);
 widget.append(stopButton);
 widget.append(label1)
 widget.append(inputHolderForNotification);
 widget.append(label2)
 widget.append(containerIdInput);
+widget.append(loader);
 
 document.body.append(widget);
