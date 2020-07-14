@@ -144,7 +144,7 @@ function autoStart() {
             const timerOnSaleSpan = timeSpan[0];
             const minutes = parseInt(timerOnSaleSpan.innerText.split(':')[0], 10);
             const seconds = parseInt(timerOnSaleSpan.innerText.split(':')[1], 10);
-            if(minutes<=16) {
+            if(minutes<=2) {
                 startButton && startButton.click();
             }
         }
