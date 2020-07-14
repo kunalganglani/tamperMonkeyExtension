@@ -1,4 +1,5 @@
 console.clear();
+document.body.style.zoom=0.8;this.blur();
 var projectPath = `https://raw.githubusercontent.com/kunalganglani/tamperMonkeyExtension/master/orderAutomation`;
 console.log('############ widget loaded ###########');
 var xpath = function (xpathToExecute) {
