@@ -14,9 +14,9 @@ function findElementTextAndPlayOnce(elementTextToFind, textToPlay) {
     var widgetid = document.getElementById('containerIdInput').value;
     var elements = xpath(`//*[@id="${widgetid}"]//*[contains(text(), '${elementTextToFind}')]`)
     for (let ele of elements) {
-        if (ele.dataset.played == undefined || ele.dataset.played === 'false') {
+        if (ele.getAttribute('played') == null || ele.getAttribute('played') === 'false') {
             playSound(textToPlay);
-            ele.dataset.played = true;
+            ele.setAttribute('played', 'true');
         }
     }
 
