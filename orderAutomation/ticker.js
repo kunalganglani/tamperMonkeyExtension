@@ -136,3 +136,18 @@ widget.append(containerIdInput);
 widget.append(loader);
 
 document.body.append(widget);
+
+function autoStart() {
+    setInterval(() => {
+        const timeSpan = xpath(`//span[contains(text(), 'Starts in')]/following-sibling::span`);
+        if(timeSpan && timeSpan[0]) {
+            const timerOnSaleSpan = timeSpan[0];
+            const minutes = parseInt(timerOnSaleSpan.innerText.split(':')[0], 10);
+            const seconds = parseInt(timerOnSaleSpan.innerText.split(':')[1], 10);
+            if(minutes<=16) {
+                startButton && startButton.click();
+            }
+        }
+    }, 1000)
+}
+autoStart();
