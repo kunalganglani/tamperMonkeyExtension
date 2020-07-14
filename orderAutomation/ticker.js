@@ -39,7 +39,11 @@ var tickerAction = function () {
         buttons = xpath(givenPaths[k]);
         if (buttons.length > 0) break;
     }
-    console.log('buttons found', buttons);
+    if(buttons.length === 0) {
+        console.log('..');
+    } else {
+        console.log('buttons found', buttons);
+    }
     for (let i = 0; i < buttons.length; i++) {
         if (!buttons[i]) {
             console.log('button not found');
@@ -61,7 +65,7 @@ var readerAction = function () {
 var startTicker = function () {
     console.log('ticker started');
     startLoader();
-    var everyMSeconds = 1;
+    var everyMSeconds = 0.5;
     var id = setInterval(
         tickerAction,
         everyMSeconds);
