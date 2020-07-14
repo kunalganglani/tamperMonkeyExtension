@@ -13,10 +13,10 @@ var xpath = function (xpathToExecute) {
 function findElementTextAndPlayOnce(elementTextToFind, textToPlay) {
     var widgetid = document.getElementById('containerIdInput').value;
     var elements = xpath(`//*[@id="${widgetid}"]//*[contains(text(), '${elementTextToFind}')]`)
-    for (let ele of elements) {
-        if (ele.getAttribute('played') == null || ele.getAttribute('played') === 'false') {
+    for (let i =0; i < elements.length; i += 1) {
+        if (elements[i].getAttribute('played') == null || elements[i].getAttribute('played') === 'false') {
             playSound(textToPlay);
-            ele.setAttribute('played', 'true');
+            elements[i].setAttribute('played', 'true');
         }
     }
 
