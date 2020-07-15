@@ -1,5 +1,5 @@
 console.clear();
-const ON_ADD_TEXT = 'This deal is added';
+const ON_ADD_TEXT = 'This deal is in your Cart';
 const DEFAULT_SALE_CONTAINER_ID = 'widgetContent';
 const BUTTON_TEXT_TO_CLICK = 'Add';
 const TEXT_NOTIFICATION_LABEL = 'Enter text to notifify on';
