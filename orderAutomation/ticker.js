@@ -1,5 +1,17 @@
 console.clear();
-document.body.style.zoom=0.8;this.blur();
+const ON_ADD_TEXT = 'The deal';
+const DEFAULT_SALE_CONTAINER_ID = 'widgetContent';
+const BUTTON_TEXT_TO_CLICK = 'Add';
+const TEXT_NOTIFICATION_LABEL = 'Enter text to notifify on';
+const USERNAME_PREFIX = 'Hello,';
+const SALE_START_TEXT = 'Starts in';
+const START_BUTTON_TEXT = 'Start';
+const STOP_BUTTON_TEXT = 'Stop';
+const LOADER_GIF = 'https://media0.giphy.com/media/9CffOPMLx0Hf2/giphy.gif?cid=ecf05e47fcdff774bdb38787e7846e18912561f1d82808c5&amp;rid=giphy.gif'
+const DEFAULT_ZOOM_RESET = 0.8;
+
+document.body.style.zoom = DEFAULT_ZOOM_RESET; 
+this.blur();
 var projectPath = `https://raw.githubusercontent.com/kunalganglani/tamperMonkeyExtension/master/orderAutomation`;
 console.log('############ widget loaded ###########');
 var xpath = function (xpathToExecute) {
@@ -13,25 +25,23 @@ var xpath = function (xpathToExecute) {
 function findElementTextAndPlayOnce(elementTextToFind, textToPlay) {
     var widgetid = document.getElementById('containerIdInput').value;
     var elements = xpath(`//*[@id="${widgetid}"]//*[contains(text(), '${elementTextToFind}')]`)
-    for (let i =0; i < elements.length; i += 1) {
+    for (let i = 0; i < elements.length; i += 1) {
         if (elements[i].getAttribute('played') == null || elements[i].getAttribute('played') === 'false') {
             playSound(textToPlay);
             elements[i].setAttribute('played', 'true');
         }
     }
-
 }
 function playSound(str) {
     var msg = new SpeechSynthesisUtterance();
     msg.text = str;
     window.speechSynthesis.speak(msg);
 }
-
 var tickerID = [];
 var tickerAction = function () {
     var widgetid = document.getElementById('containerIdInput').value;
     var givenPath = `//*[@id="${widgetid}"]//button`;
-    var givenPath2 = `//*[@id="${widgetid}"]//*[contains(text(), 'Add')]`;
+    var givenPath2 = `//*[@id="${widgetid}"]//*[contains(text(), '${BUTTON_TEXT_TO_CLICK}')]`;
     var givenPath3 = `//*[@id="${widgetid}"]//input`
     var buttons;
     var givenPaths = [givenPath, givenPath2, givenPath3];
@@ -39,7 +49,7 @@ var tickerAction = function () {
         buttons = xpath(givenPaths[k]);
         if (buttons.length > 0) break;
     }
-    if(buttons.length === 0) {
+    if (buttons.length === 0) {
         console.log('..');
     } else {
         console.log('buttons found', buttons);
@@ -53,15 +63,13 @@ var tickerAction = function () {
         } else {
             console.log('button click method not found');
         }
-
     }
 };
 var readerAction = function () {
-    var username = xpath(`//span[contains(text(), 'Hello,')]`)[0].textContent.split(', ')[1];
+    var username = xpath(`//span[contains(text(), '${USERNAME_PREFIX}')]`)[0].textContent.split(', ')[1];
     var listenTo = document.getElementById('inputHolderForNotification').value;
     findElementTextAndPlayOnce(listenTo, username);
 }
-
 var startTicker = function () {
     console.log('ticker started');
     startLoader();
@@ -78,7 +86,6 @@ var startTicker = function () {
     );
     tickerID.push(idForReader);
 }
-
 var stopTicker = function () {
     console.log('ticker stopped');
     stopLoader();
@@ -93,17 +100,17 @@ function createButton(label, id, clickhandler) {
     btn.addEventListener('click', clickhandler)
     return btn;
 }
-var startButton = createButton('Start', 'startButton', startTicker);
-var stopButton = createButton('Stop', 'stopButton', stopTicker);
+var startButton = createButton(`${START_BUTTON_TEXT}`, 'startButton', startTicker);
+var stopButton = createButton(`${STOP_BUTTON_TEXT}`, 'stopButton', stopTicker);
 var inputHolderForNotification = document.createElement('INPUT');
 inputHolderForNotification.id = 'inputHolderForNotification';
-inputHolderForNotification.placeholder = 'Enter text to notifify on';
-inputHolderForNotification.value = 'to cart';
+inputHolderForNotification.placeholder = TEXT_NOTIFICATION_LABEL;
+inputHolderForNotification.value = ON_ADD_TEXT;
 
 var containerIdInput = document.createElement('INPUT');
 containerIdInput.id = 'containerIdInput';
 containerIdInput.placeholder = 'Enter container id for sale';
-containerIdInput.value = 'widgetContent';
+containerIdInput.value = DEFAULT_SALE_CONTAINER_ID;
 
 var widget = document.createElement('DIV');
 label1 = document.createElement('span')
@@ -117,38 +124,35 @@ function htmlToElem(html) {
     html = html.trim(); // Never return a space text node as a result
     temp.innerHTML = html;
     return temp.content.firstChild;
-  }
+}
 
 var loader = htmlToElem(`<div id="loader">
 <img id="loaderImage" 
-src="https://media0.giphy.com/media/9CffOPMLx0Hf2/giphy.gif?cid=ecf05e47fcdff774bdb38787e7846e18912561f1d82808c5&amp;rid=giphy.gif"
+src=${LOADER_GIF}
 alt="typing email GIF">
 </div>`)
 
 function startLoader() {
-    document.getElementById('loader').style.display= 'inline-block'
+    document.getElementById('loader').style.display = 'inline-block'
 }
 function stopLoader() {
-    document.getElementById('loader').style.display= 'none'
+    document.getElementById('loader').style.display = 'none'
 }
-widget.append(startButton);
-widget.append(stopButton);
-widget.append(label1)
-widget.append(inputHolderForNotification);
-widget.append(label2)
-widget.append(containerIdInput);
-widget.append(loader);
-
+widget.append(startButton,
+    stopButton,
+    label1,
+    inputHolderForNotification,
+    label2,
+    containerIdInput,
+    loader);
 document.body.append(widget);
-
 function autoStart() {
     setInterval(() => {
-        const timeSpan = xpath(`//span[contains(text(), 'Starts in')]/following-sibling::span`);
-        if(timeSpan && timeSpan[0]) {
+        const timeSpan = xpath(`//span[contains(text(), '${SALE_START_TEXT}')]/following-sibling::span`);
+        if (timeSpan && timeSpan[0]) {
             const timerOnSaleSpan = timeSpan[0];
             const minutes = parseInt(timerOnSaleSpan.innerText.split(':')[0], 10);
-            const seconds = parseInt(timerOnSaleSpan.innerText.split(':')[1], 10);
-            if(minutes<=2) {
+            if (minutes <= 2) {
                 startButton && startButton.click();
             }
         }
