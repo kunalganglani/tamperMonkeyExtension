@@ -39,31 +39,18 @@ function playSound(str) {
 }
 var tickerID = [];
 var tickerAction = function () {
-    var widgetid = document.getElementById('containerIdInput').value;
-    var givenPath = `//*[@id="${widgetid}"]//button`;
-    var givenPath2 = `//*[@id="${widgetid}"]//*[contains(text(), '${BUTTON_TEXT_TO_CLICK}')]`;
-    var givenPath3 = `//*[@id="${widgetid}"]//input`
-    var buttons;
-    var givenPaths = [givenPath, givenPath2, givenPath3];
-    for (let k = 0; k < givenPaths.length; k++) {
-        buttons = xpath(givenPaths[k]);
-        if (buttons.length > 0) break;
-    }
-    if (buttons.length === 0) {
-        console.log('..');
-    } else {
-        console.log('buttons found', buttons);
-    }
-    for (let i = 0; i < buttons.length; i++) {
-        if (!buttons[i]) {
-            console.log('button not found');
-        }
-        if (buttons[i].click) {
-            buttons[i].click();
-        } else {
-            console.log('button click method not found');
+    var vaccineList = document.getElementById('containerIdInput').value.split(',').map(x => x.trim());
+    var centers = xpath(`//div[@class="mat-list-text"]`);
+    for(var i =0 ; i< centers.length; i++) {
+        var slots = centers[i].querySelectorAll('div.slots-box');
+        var slotsAvailable =  [...slots].map(item => item.innerText).filter(item => item!=='NA').length > 0;
+        if(!slotsAvailable) {
+            centers[i].style.display = 'none'
         }
     }
+    
+    var givenPath = `//ion-button[contains(@class,'district-search')]`;
+
 };
 var readerAction = function () {
     var username = xpath(`//span[contains(text(), '${USERNAME_PREFIX}')]`)[0].textContent.split(', ')[1];
@@ -78,13 +65,6 @@ var startTicker = function () {
         tickerAction,
         everyMSeconds);
     tickerID.push(id);
-    // start ticker for reader function
-    var everyXSeconds = 3000;
-    var idForReader = setInterval(
-        readerAction,
-        everyXSeconds
-    );
-    tickerID.push(idForReader);
 }
 var stopTicker = function () {
     console.log('ticker stopped');
