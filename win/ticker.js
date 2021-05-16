@@ -148,14 +148,7 @@ widget.append(startButton,
 document.body.append(widget);
 function autoStart() {
     setInterval(() => {
-        const timeSpan = xpath(`//span[contains(text(), '${SALE_START_TEXT}')]/following-sibling::span`);
-        if (timeSpan && timeSpan[0]) {
-            const timerOnSaleSpan = timeSpan[0];
-            const minutes = parseInt(timerOnSaleSpan.innerText.split(':')[0], 10);
-            if (minutes <= 2) {
-                startButton && startButton.click();
-            }
-        }
+        startButton && startButton.click();
     }, 1000)
 }
 autoStart();
