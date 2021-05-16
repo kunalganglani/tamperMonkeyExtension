@@ -43,7 +43,7 @@ var tickerAction = function () {
     var centers = xpath(`//div[@class="mat-list-text"]`);
     for(var i =0 ; i< centers.length; i++) {
         var slots = centers[i].querySelectorAll('div.slots-box');
-        var slotsAvailable =  [...slots].map(item => item.innerText).filter(item => item!=='NA').length > 0;
+        var slotsAvailable =  [...slots].map(item => item.innerText).filter(item =>   !item.includes('Booked') && item!=='NA').length > 0;
         if(!slotsAvailable) {
             centers[i].style.display = 'none'
         }
