@@ -80,7 +80,6 @@ var tickerAction = function () {
             break;
           }
         }
-        break;
       }
     }
   }
@@ -165,9 +164,3 @@ widget.append(
   loader
 );
 document.body.append(widget);
-function autoStart() {
-  setInterval(() => {
-    startButton && startButton.click();
-  }, 1000);
-}
-autoStart();
