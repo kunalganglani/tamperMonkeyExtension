@@ -1,15 +1,30 @@
 console.clear();
 const ON_ADD_TEXT = "This deal is in your Cart";
-const DEFAULT_SALE_CONTAINER_ID = "widgetContent";
 const BUTTON_TEXT_TO_CLICK = "Add";
 const TEXT_NOTIFICATION_LABEL = "Enter text to notifify on";
 const USERNAME_PREFIX = "Hello,";
 const SALE_START_TEXT = "Starts in";
 const START_BUTTON_TEXT = "Start";
 const STOP_BUTTON_TEXT = "Stop";
+const INPUT_ONE_LABEL = "Age group, 18/ 45?";
+const INPUT_TWO_LABEL = "Vaccine wanted";
 const LOADER_GIF =
   "https://media0.giphy.com/media/9CffOPMLx0Hf2/giphy.gif?cid=ecf05e47fcdff774bdb38787e7846e18912561f1d82808c5&amp;rid=giphy.gif";
 const DEFAULT_ZOOM_RESET = 0.8;
+const FORM_FIELDS = [
+  {
+    id: "ageGroup",
+    placeholder: "group - 18/45 ?",
+    defaultValue: "18",
+    type: "input",
+  },
+  {
+    id: "vacineWanted",
+    placeholder: "Vacine wanted?",
+    defaultValue: "Covaxin,Covishield",
+    type: "input",
+  },
+];
 
 document.body.style.zoom = DEFAULT_ZOOM_RESET;
 this.blur();
@@ -29,11 +44,8 @@ var xpath = function (xpathToExecute) {
   }
   return result;
 };
-function findElementTextAndPlayOnce(elementTextToFind, textToPlay) {
-  var widgetid = document.getElementById("containerIdInput").value;
-  var elements = xpath(
-    `//*[@id="${widgetid}"]//*[contains(text(), '${elementTextToFind}')]`
-  );
+function findElementAndPlayOnce(elementXpathToFind, textToPlay) {
+  var elements = xpath(elementXpathToFind);
   for (let i = 0; i < elements.length; i += 1) {
     if (
       elements[i].getAttribute("played") == null ||
@@ -77,19 +89,16 @@ var tickerAction = function () {
             !slots[k].innerText.includes("Booked")
           ) {
             slots[k].click();
+            findElementAndPlayOnce(
+              `//h3[@class="appoint-success"]`,
+              "Appointment booked buddy"
+            );
             break;
           }
         }
       }
     }
   }
-};
-var readerAction = function () {
-  var username = xpath(
-    `//span[contains(text(), '${USERNAME_PREFIX}')]`
-  )[0].textContent.split(", ")[1];
-  var listenTo = document.getElementById("inputHolderForNotification").value;
-  findElementTextAndPlayOnce(listenTo, username);
 };
 var startTicker = function () {
   console.log("ticker started");
@@ -112,28 +121,30 @@ function createButton(label, id, clickhandler) {
   btn.addEventListener("click", clickhandler);
   return btn;
 }
+function createInput(id, placeholder, value) {
+  var inp = document.createElement("INPUT");
+  inp.id = id;
+  inp.placeholder = placeholder;
+  inp.value = value;
+  return inp;
+}
+
 var startButton = createButton(
   `${START_BUTTON_TEXT}`,
   "startButton",
   startTicker
 );
 var stopButton = createButton(`${STOP_BUTTON_TEXT}`, "stopButton", stopTicker);
-var inputHolderForNotification = document.createElement("INPUT");
-inputHolderForNotification.id = "inputHolderForNotification";
-inputHolderForNotification.placeholder = TEXT_NOTIFICATION_LABEL;
-inputHolderForNotification.value = ON_ADD_TEXT;
-
-var containerIdInput = document.createElement("INPUT");
-containerIdInput.id = "containerIdInput";
-containerIdInput.placeholder = "Enter container id for sale";
-containerIdInput.value = DEFAULT_SALE_CONTAINER_ID;
+var inputFields = FORM_FIELDS.map((field) => {
+  return createInput(field.id, field.placeholder, field.defaultValue);
+});
 
 var widget = document.createElement("DIV");
 label1 = document.createElement("span");
-label1.innerText = "Notify On";
+label1.innerText = INPUT_ONE_LABEL;
 
 label2 = document.createElement("span");
-label2.innerText = "Sale Container id";
+label2.innerText = INPUT_TWO_LABEL;
 widget.id = "kg";
 function htmlToElem(html) {
   let temp = document.createElement("template");
@@ -154,13 +165,5 @@ function startLoader() {
 function stopLoader() {
   document.getElementById("loader").style.display = "none";
 }
-widget.append(
-  startButton,
-  stopButton,
-  label1,
-  inputHolderForNotification,
-  label2,
-  containerIdInput,
-  loader
-);
+widget.append(startButton, stopButton, ...inputFields, loader);
 document.body.append(widget);
