@@ -68,18 +68,18 @@ var tickerAction = function () {
     var searchButton = xpath(
       `//ion-button[contains(@class,'district-search')]`
     )[0];
-    var targetAgeGroup = document.getElementById('ageGroup').value;
+    var targetAgeGroup = document.getElementById("ageGroup").value;
     var LabelSelector = xpath(`//label[.='Age ${targetAgeGroup}+']`)[0];
-    
+
     searchButton && searchButton.click && searchButton.click();
     LabelSelector && LabelSelector.click && LabelSelector.click();
     var vaccineList = document
       .getElementById("vacineWanted")
       .value.split(",")
       .map((x) => x.trim());
-    for(var vIndex = 0; vIndex < vaccineList.length; vIndex++) {
-       var vacineLabel = xpath(`//label[.='${vaccineList[vIndex]}']`)[0];
-       vacineLabel && vacineLabel.click && vacineLabel.click();
+    for (var vIndex = 0; vIndex < vaccineList.length; vIndex++) {
+      var vacineLabel = xpath(`//label[.='${vaccineList[vIndex]}']`)[0];
+      vacineLabel && vacineLabel.click && vacineLabel.click();
     }
     var centers = xpath(`//div[@class="mat-list-text"]`);
     for (var i = 0; i < centers.length; i++) {
@@ -87,8 +87,8 @@ var tickerAction = function () {
       var slotsAvailable =
         [...slots]
           .map((item) => item.innerText)
-          .filter((item) => !item.includes("Booked") && item !== "NA").length >
-        0;
+          .filter((item) => !item.includes("Booked") && !item.includes("NA"))
+          .length > 0;
       if (!slotsAvailable) {
         centers[i].style.display = "none";
       } else {
