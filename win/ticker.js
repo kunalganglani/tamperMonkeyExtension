@@ -78,7 +78,7 @@ var tickerAction = function () {
       .value.split(",")
       .map((x) => x.trim());
     for(var vIndex = 0; vIndex < vaccineList.length; vIndex++) {
-       var vacineLabel = xpath(`//label[.=${vaccineList[vIndex]}]`)[0];
+       var vacineLabel = xpath(`//label[.='${vaccineList[vIndex]}']`)[0];
        vacineLabel && vacineLabel.click && vacineLabel.click();
     }
     var centers = xpath(`//div[@class="mat-list-text"]`);
