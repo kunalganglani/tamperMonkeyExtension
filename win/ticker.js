@@ -64,14 +64,22 @@ function playSound(str) {
 var tickerID = [];
 var tickerAction = function () {
   if (xpath(`//h3[@class="appoint-success"]`).length === 0) {
+    var searchButton = xpath(
+      `//ion-button[contains(@class,'district-search')]`
+    )[0];
+    var targetAgeGroup = document.getElementById('ageGroup').value;
+    var LabelSelector = xpath(`//label[.='Age ${targetAgeGroup}+']`)
+    
+    searchButton && searchButton.click();
+    LabelSelector && LabelSelector.click();
     var vaccineList = document
       .getElementById("containerIdInput")
       .value.split(",")
       .map((x) => x.trim());
-    var searchButton = xpath(
-      `//ion-button[contains(@class,'district-search')]`
-    )[0];
-    searchButton && searchButton.click();
+    for(var vIndex = 0; vIndex < vaccineList.length; vIndex++) {
+       var vacineLabel = xpath(`//label[.=${vaccineList[vIndex]}]`);
+       vacineLabel && vacineLabel.click();
+    }
     var centers = xpath(`//div[@class="mat-list-text"]`);
     for (var i = 0; i < centers.length; i++) {
       var slots = centers[i].querySelectorAll("div.slots-box");
