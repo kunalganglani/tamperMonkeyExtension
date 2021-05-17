@@ -64,7 +64,7 @@ function playSound(str) {
 }
 var tickerID = [];
 var tickerAction = function () {
-  if (xpath(`//h3[@class="appoint-success"]`).length !== 0) {
+  if (xpath(`//h3[@class="appoint-success"]`).length === 0) {
     var searchButton = xpath(
       `//ion-button[contains(@class,'district-search')]`
     )[0];
