@@ -74,7 +74,7 @@ var tickerAction = function () {
     searchButton && searchButton.click && searchButton.click();
     LabelSelector && LabelSelector.click && LabelSelector.click();
     var vaccineList = document
-      .getElementById("containerIdInput")
+      .getElementById("vacineWanted")
       .value.split(",")
       .map((x) => x.trim());
     for(var vIndex = 0; vIndex < vaccineList.length; vIndex++) {
