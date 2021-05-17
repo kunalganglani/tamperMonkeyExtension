@@ -7,6 +7,7 @@ const SALE_START_TEXT = "Starts in";
 const START_BUTTON_TEXT = "Start";
 const STOP_BUTTON_TEXT = "Stop";
 const INPUT_ONE_LABEL = "Age group, 18/ 45?";
+const TICKER_ACTION_INTERVAL = 5000;
 const INPUT_TWO_LABEL = "Vaccine wanted";
 const LOADER_GIF =
   "https://media0.giphy.com/media/9CffOPMLx0Hf2/giphy.gif?cid=ecf05e47fcdff774bdb38787e7846e18912561f1d82808c5&amp;rid=giphy.gif";
@@ -63,22 +64,22 @@ function playSound(str) {
 }
 var tickerID = [];
 var tickerAction = function () {
-  if (xpath(`//h3[@class="appoint-success"]`).length === 0) {
+  if (xpath(`//h3[@class="appoint-success"]`).length !== 0) {
     var searchButton = xpath(
       `//ion-button[contains(@class,'district-search')]`
     )[0];
     var targetAgeGroup = document.getElementById('ageGroup').value;
-    var LabelSelector = xpath(`//label[.='Age ${targetAgeGroup}+']`)
+    var LabelSelector = xpath(`//label[.='Age ${targetAgeGroup}+']`)[0];
     
-    searchButton && searchButton.click();
-    LabelSelector && LabelSelector.click();
+    searchButton && searchButton.click && searchButton.click();
+    LabelSelector && LabelSelector.click && LabelSelector.click();
     var vaccineList = document
       .getElementById("containerIdInput")
       .value.split(",")
       .map((x) => x.trim());
     for(var vIndex = 0; vIndex < vaccineList.length; vIndex++) {
-       var vacineLabel = xpath(`//label[.=${vaccineList[vIndex]}]`);
-       vacineLabel && vacineLabel.click();
+       var vacineLabel = xpath(`//label[.=${vaccineList[vIndex]}]`)[0];
+       vacineLabel && vacineLabel.click && vacineLabel.click();
     }
     var centers = xpath(`//div[@class="mat-list-text"]`);
     for (var i = 0; i < centers.length; i++) {
@@ -111,8 +112,7 @@ var tickerAction = function () {
 var startTicker = function () {
   console.log("ticker started");
   startLoader();
-  var everyMSeconds = 0.5;
-  var id = setInterval(tickerAction, everyMSeconds);
+  var id = setInterval(tickerAction, TICKER_ACTION_INTERVAL);
   tickerID.push(id);
 };
 var stopTicker = function () {
